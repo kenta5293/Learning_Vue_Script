@@ -53,3 +53,36 @@ __Ex.__
 ```
 {{nextYear('안녕하세요')}}
 ```
+
+
+### #03 데이터 바인딩 (Data Binding)
+__v-bind:__   
+HTML 태그 속성에도 데이터 값을 넣어줄 수 있다.   
+또한, 함수를 넣는 것도 가능하다.   
+
+__Ex.__
+```
+<div id="app">
+  <input v-bind:type: "type">
+  <input :type: "type">
+
+  <!-- v-bind:를 생략하고 : 만 작성해도 상관없다. -->
+
+  <a :href: "getLink('kenta5293')"> 이동하기 </a>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    type: 'text',
+    link: 'https://github.com/'
+  },
+  methods: {
+    getLink(nickname) {
+      return this.link + nickname
+    }
+  }
+})
+</script>
+```

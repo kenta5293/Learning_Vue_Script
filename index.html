@@ -8,7 +8,11 @@
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
-  <div id="app">{{ nextYear('안녕하세요') }}</div>
+  <div id="app">
+    <p>{{ nextYear('안녕하세요') }}</p>
+    <input v-bind:type="type" v-bind:value="inputData">
+    <a :href="getGitLink('kenta5293')">Github 이동</a>
+  </div>
   <script>
     new Vue({
       el: '#app',
@@ -16,9 +20,15 @@
         person: {
           name: 'kenta',
           age: 19
-        }
+        },
+        inputData: 'Hello',
+        type: 'text',
+        link: 'https://github.com/'
       },
       methods: {
+          getGitLink(nickname) {
+            return this.link + nickname
+          },
           nextYear(greeting) {
             return `${greeting}! ${this.person.name}는(은) ${(this.person.age + 1)}살 입니다.`;
           },
