@@ -9,33 +9,23 @@
 </head>
 <body>
   <div id="app">
-    <p>{{ nextYear('안녕하세요') }}</p>
-    <input v-bind:type="type" v-bind:value="inputData">
-    <a :href="getGitLink('kenta5293')">Github 이동</a>
+    <form v-on:submit.prevent="submit">
+      <input type="text"><br>
+      <button type="submit">Submit</button>
+    </form>
   </div>
   <script>
     new Vue({
       el: '#app',
       data: {
-        person: {
-          name: 'kenta',
-          age: 19
-        },
-        inputData: 'Hello',
-        type: 'text',
-        link: 'https://github.com/'
+        year: 2021
       },
       methods: {
-          getGitLink(nickname) {
-            return this.link + nickname
-          },
-          nextYear(greeting) {
-            return `${greeting}! ${this.person.name}는(은) ${(this.person.age + 1)}살 입니다.`;
-          },
-          otherMethod: function() {
-            this.nextYear();
-          }
+        submit() {
+          alert('Hello')
+          console.log('Hello')
         }
+      }
     });
   </script>
 </body>
