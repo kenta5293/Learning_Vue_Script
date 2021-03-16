@@ -94,6 +94,7 @@ new Vue({
 ### #04 이벤트 (Events)
 __v-on:__   
 이벤트 앞에 v-on을 작성하는 것으로 이벤트를 생성할 수 있다.   
+또, 데이터 바인딩과 같이 v-on을 @ 으로 대체할 수 있다.    
 
 __Ex.__
 ```
@@ -124,3 +125,32 @@ Submit 버튼을 누르면 methods에 작성된 submit() 함수가 실행되며,
 .prevent는 자바스크립트 기본 문법의 event.preventDefault()를 호출하는 것이다.   
 외에도 다양한 수식어가 있으니 Vue.js 공식 사이트를 참고하면 좋을 듯 하다.   
 __https://kr.vuejs.org/v2/api/index.html#v-on__
+
+
+---
+
+### #05 데이터 양방향 바인딩 (Data Two Way Binding)
+__v-model__   
+v-model="데이터"를 작성하는 것으로 데이터 양방향 바인딩이 가능하다.   
+__데이터 → 뷰__ 의 형태로 데이터의 값을 뷰로 업데이트하여 보여주는 것을 __단방향 바인딩__ 이라고 한다.   
+한 방향으로 흐르는 것과 다르게 __데이터 ⇄ 뷰__ 형태로 바인딩하여 양 방향으로 흐르게 해주는 것을 __양방향 바인딩__ 이라고 한다.   
+즉, 데이터에 있는 값이 뷰에 나타나고, 이 뷰의 값이 바뀌면 데이터의 값도 바뀌는 것이다.
+
+__Ex.__
+```
+<div id="app">
+  <form v-on:submit.prevent="submit">
+    <input type="text" v-model="text" ><br>
+    {{ text }}<br>
+  </form>
+</div>
+
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      text: 'text'
+    },
+  });
+</script>
+```

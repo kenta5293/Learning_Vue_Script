@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,26 +8,31 @@
   <title>Vue.js 공부하기</title>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
+
 <body>
   <div id="app">
     <form v-on:submit.prevent="submit">
-      <input type="text"><br>
+      <!-- <input type="text" :value="text" @keyup="updateText"><br> -->
+      <input type="text" v-model="text"><br>
+      {{ text }}<br>
       <button type="submit">Submit</button>
     </form>
   </div>
+
   <script>
     new Vue({
       el: '#app',
       data: {
-        year: 2021
+        text: 'text'
       },
       methods: {
-        submit() {
-          alert('Hello')
-          console.log('Hello')
-        }
+        // updateText(event) {
+        //   console.log(event);
+        //   this.text = event.target.value;
+        // }
       }
     });
   </script>
 </body>
+
 </html>
