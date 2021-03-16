@@ -11,25 +11,35 @@
 
 <body>
   <div id="app">
-    <form v-on:submit.prevent="submit">
-      <!-- <input type="text" :value="text" @keyup="updateText"><br> -->
-      <input type="text" v-model="text"><br>
-      {{ text }}<br>
-      <button type="submit">Submit</button>
-    </form>
+    Computed (원본: 안녕하세요) :<br>
+    {{ reversedMessage }} <br>
+    <!-- '안녕하세요'의 역순인 '요세하년안'이 출력된다. -->
+    <br>
+
+    Methods (원본: 요세하녕안) :<br>
+    {{ reversedMessage1() }}
+    {{ reversedMessage1() }}
+    {{ reversedMessage1() }}
+    <!-- '요세하녕안'의 역순인 '안녕하세요'가 출력된다. -->
+    <!-- method는 꼭 () 소괄호를 붙여야한다!! -->
   </div>
 
   <script>
     new Vue({
       el: '#app',
       data: {
-        text: 'text'
+        message1: '요세하녕안',
+        message: '안녕하세요'
       },
       methods: {
-        // updateText(event) {
-        //   console.log(event);
-        //   this.text = event.target.value;
-        // }
+        reversedMessage1() {
+          return this.message1.split('').reverse().join('');
+        }
+      },
+      computed: {
+        reversedMessage() {
+          return this.message.split('').reverse().join('');
+        }
       }
     });
   </script>

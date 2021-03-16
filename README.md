@@ -126,7 +126,6 @@ Submit 버튼을 누르면 methods에 작성된 submit() 함수가 실행되며,
 외에도 다양한 수식어가 있으니 Vue.js 공식 사이트를 참고하면 좋을 듯 하다.   
 __https://kr.vuejs.org/v2/api/index.html#v-on__
 
-
 ---
 
 ### #05 데이터 양방향 바인딩 (Data Two Way Binding)
@@ -154,3 +153,42 @@ __Ex.__
   });
 </script>
 ```
+
+---
+
+### #06 Computed 속성
+__Computed__   
+간단한 연산의 경우 {{ }} 안에 넣어도 괜찮으나, 많은 연산이 들어갈 경우 코드가 비대해지고, 유지보수가 어렵다고 한다.   
+이를 해결하기 위해 사용해야하는 것이 바로 __computed 속성__ 이다.   
+
+```
+  <div id="app">
+    {{ reversedMessage }}
+    <!-- '안녕하세요'의 역순인 '요세하년안'이 출력된다. -->
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        message: '안녕하세요'
+      },
+      methods: {
+
+      },
+      computed: {
+        reversedMessage() {
+          return this.message.split('').reverse().join('');
+        }
+      }
+    });
+  </script>
+```
+
+Computed 속성은 computed 라는 오브젝트 안에 작성하는 것으로, 템플릿 안에는 {{ reversedMessage }} 와 같이 작성한다.   
+메소드와의 차이점으로는 메소드는 템플릿에 () 소괄호를 꼭 작성해야하지만 Computed에 정의된 경우에는 소괄호를 작성하지 않는다!   
+
+다른 차이점으로 Computed는 캐싱을 하고, 메소드는 캐싱을 하지 않는다는 점이다!   
+Computed는 처음 한번만 연산하여 저장(캐싱)을 하여 값을 가지고 있고, 종속 대상이 바뀔 때에만 함수를 다시 실행한다.   
+즉, 몇 번을 요청해도 처음 계산했던 결과를 즉시 반환해주는 것이다.   
+메소드의 경우에는 요청될 때마다 data에서 가져와 여러번 연산을 하고 return을 해주는 것이다.   
