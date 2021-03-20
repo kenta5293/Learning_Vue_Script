@@ -11,34 +11,27 @@
 
 <body>
   <div id="app">
-    Computed (원본: 안녕하세요) :<br>
-    {{ reversedMessage }} <br>
-    <!-- '안녕하세요'의 역순인 '요세하년안'이 출력된다. -->
-    <br>
-
-    Methods (원본: 요세하녕안) :<br>
-    {{ reversedMessage1() }}
-    {{ reversedMessage1() }}
-    {{ reversedMessage1() }}
-    <!-- '요세하녕안'의 역순인 '안녕하세요'가 출력된다. -->
-    <!-- method는 꼭 () 소괄호를 붙여야한다!! -->
+    {{ message }}<br>
+    <button @click="changeMessage">Click</button><br>
+    {{ updated }}
   </div>
 
   <script>
     new Vue({
       el: '#app',
       data: {
-        message1: '요세하녕안',
-        message: '안녕하세요'
+        message: '안녕하세요',
+        updated: '안녕못해요',
       },
       methods: {
-        reversedMessage1() {
-          return this.message1.split('').reverse().join('');
+        changeMessage() {
+          this.message = "Hello"
         }
       },
-      computed: {
-        reversedMessage() {
-          return this.message.split('').reverse().join('');
+      watch: {
+        message(newVal, oldVal) {
+          console.log(newVal, oldVal);
+          this.updated = "NO Hello!";
         }
       }
     });
