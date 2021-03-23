@@ -237,3 +237,56 @@ __Ex.__
 
 Watch속성을 사용할 때에는 감시하고 싶은 데이터를 함수 형식으로 작성하면 된다. 위의 예제에선 "message"를 감시하고 있으므로 watch 안에 "message"라는 함수를 만든 것이다.   
 또 매개변수로 __newValue__ 와 __oldValue__ 를 받는데, 업데이트 된 값이 첫번째(newValue)에 들어오고, 기존의 값이 두번째(oldValue)에 들어오게 된다.
+
+---
+
+### #08 클래스 & 스타일 바인딩
+클래스와 스타일 바인딩도 데이터 바인딩을 했던 것과 같이 v-bind: 혹은 : 문자로 할 수 있다.   
+밑의 예시를 보면서 알아보도록 하자.   
+
+__Ex.__
+css
+```
+.red {
+  color: red;
+}
+.bold-text {
+  font-weight: bold;
+}
+```
+
+template & js
+```
+<div id="app">
+  <!-- 클래스 바인딩 -->
+  <div :class="{ red: isRed, 'bold-text': isBold }">Hello</div>
+
+  <!-- 스타일 바인딩 -->
+  <div :style="{ color: red, fontSize: size}">He
+  <button @click="update">Click</button>
+</div>
+
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      isRed: false,
+      isBold: false,
+      red: 'red',
+      size: '30px'
+    },
+    methods: {
+      update() {
+        this.isRed = !this.isRed;
+        this.isBold = !this.isBold;
+      }
+    }
+  });
+</script>
+```
+
+> 먼저 클래스 바인딩에 대해 알아보면, 스타일의 이름이 앞에 나오고 :(콜론) 뒤에 그 값이 true 혹은 false의 값을 가진 데이터가 나와있다.   
+위 코드에선 버튼을 클릭하면 update라는 메소드의 실행으로 원래 false 였던 isRed와 isBold의 값을 true로 바꾸면서 첫번째 div태그에 클래스를 적용하게 된다.   
+또한, 두개의 class를 적용하고 싶다면 ,를 이용하면 되고, class 이름에 "-"가 존재한다면, String으로 묶어주어야 한다.
+
+> 다음으로 스타일 바인딩에 알아보면 :style로 작성하며 {} 안에는 자바스크립트로 작성하기 때문에 css의 속성으로 적는 것이 아닌 자바스크립트 형태로 속성을 작성해야 한다. 그 뒤에는 data의 값을 넣어주면 적용된다.

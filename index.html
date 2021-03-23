@@ -7,31 +7,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vue.js 공부하기</title>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <style>
+    .red {
+      color: red;
+    }
+
+    .bold-text {
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
   <div id="app">
-    {{ message }}<br>
-    <button @click="changeMessage">Click</button><br>
-    {{ updated }}
+    <!-- 클래스 바인딩 -->
+    <div :class="{ red: isRed, 'bold-text': isBold }">Hello</div>
+
+    <!-- 스타일 바인딩 -->
+    <div :style="{ color: red, fontSize: size}">Hello</div>
+    <button @click="update">Click</button>
   </div>
 
   <script>
     new Vue({
       el: '#app',
       data: {
-        message: '안녕하세요',
-        updated: '안녕못해요',
+        isRed: false,
+        isBold: false,
+
+        red: 'red',
+        size: '30px'
       },
       methods: {
-        changeMessage() {
-          this.message = "Hello"
-        }
-      },
-      watch: {
-        message(newVal, oldVal) {
-          console.log(newVal, oldVal);
-          this.updated = "NO Hello!";
+        update() {
+          this.isRed = !this.isRed;
+          this.isBold = !this.isBold;
         }
       }
     });
