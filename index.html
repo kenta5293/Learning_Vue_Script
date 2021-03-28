@@ -7,41 +7,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vue.js 공부하기</title>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <style>
-    .red {
-      color: red;
-    }
-
-    .bold-text {
-      font-weight: bold;
-    }
-  </style>
 </head>
 
 <body>
   <div id="app">
-    <!-- 클래스 바인딩 -->
-    <div :class="{ red: isRed, 'bold-text': isBold }">Hello</div>
+    <!-- v-if -->
+    <template v-if="number === 1">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+    </template>
+    <div v-else-if="number === 3">Number is 3</div>
+    <div v-else>No</div>
+    <button @click="increaseNumber">Up</button> {{ number }}
 
-    <!-- 스타일 바인딩 -->
-    <div :style="{ color: red, fontSize: size}">Hello</div>
-    <button @click="update">Click</button>
+    <!-- v-show -->
+    <div v-show="show">Yes</div>
+    <button @click="toggle">Show</button>
   </div>
 
   <script>
     new Vue({
       el: '#app',
       data: {
-        isRed: false,
-        isBold: false,
-
-        red: 'red',
-        size: '30px'
+        number: 1,
+        show: false
       },
       methods: {
-        update() {
-          this.isRed = !this.isRed;
-          this.isBold = !this.isBold;
+        increaseNumber() {
+          this.number++;
+        },
+        toggle() {
+          this.show = !this.show;
         }
       }
     });

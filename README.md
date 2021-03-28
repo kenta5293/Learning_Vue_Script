@@ -290,3 +290,68 @@ template & js
 또한, 두개의 class를 적용하고 싶다면 ,를 이용하면 되고, class 이름에 "-"가 존재한다면, String으로 묶어주어야 한다.
 
 > 다음으로 스타일 바인딩에 알아보면 :style로 작성하며 {} 안에는 자바스크립트로 작성하기 때문에 css의 속성으로 적는 것이 아닌 자바스크립트 형태로 속성을 작성해야 한다. 그 뒤에는 data의 값을 넣어주면 적용된다.
+
+---
+
+### #09 v-if & v-show
+#### v-if
+v-if는 vue.js의 조건문으로 조건을 작성하여 값이 만약 true라면 그 요소를 렌더링 해준다.   
+v-else를 이용하여 false일 경우의 값을 출력할 수도 있다. 또한, v-else-if 도 존재하여 다른 경우에 대한 요소도 여러 번 연결하여 렌더링 가능하다.   
+
+__Ex.__
+```
+<div id="app">
+  <template v-if="number === 1">
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+  </template>
+  <div v-else-if="number === 3">It is 3</div>
+  <div v-else>No</div>
+  <button @click="increaseNumber">Up</button> {{ number }}
+</div>
+
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      number: 1,
+    },
+    methods: {
+      increaseNumber() {
+        this.number++;
+      }
+    }
+  });
+</script>
+```
+위는 number의 값이 1일 경우 123을 출력하고, 버튼을 눌러 number의 값이 커져 3이 될 경우 "It is 3"을 출력하는 예제이다. 또, 그 외의 값은 else 를 통해 No를 출력한다.   
+그리고 위에서는 < templeate /> 라는 태그를 이용하여 두개 이상의 요소 즉 123을 묶어서 보이게 할 수 있다.
+
+
+#### v-show
+v-show 또한 v-if와 매우 비슷하다. v-show는 v-if와 다르게 < template /> 태그를 사용할 수 없으며, v-else와 같은 기능을 하는 속성이 존재하지 않다. 가장 큰 차이점은 v-if는 렌더링을 아예 하지 않지만, v-show는 렌더링을 하고 css의 속성 중 하나인 "display: none"을 toggle 을 한다.   
+
+__Ex.__
+```
+  <div id="app">
+    <div v-show="show">Yes</div>
+    <button @click="toggle">Show</button>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        show: false
+      },
+      methods: {
+        toggle() {
+          this.show = !this.show;
+        }
+      }
+    });
+  </script>
+```
+
+위의 예제를 보면 알 수 있듯이, v-show는 v-if에 비해 매우 간단하다. 공식문서에서는 v-show는 자주 토글해야할 때 즉 없어지거나 렌더링되어야 할 때 사용하고 그 외에는 v-if를 사용하는 것을 권장한다.
