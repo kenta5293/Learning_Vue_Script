@@ -365,23 +365,23 @@ __Ex.__
 ```
 <div id="app">
   <div>
-    {{ people[0].name }} / {{people[0].age}}
+    {{ people[0].name }} / {{ people[0].age }}
   </div>
   <div>
-    {{ people[1].name }} / {{people[1].age}}
+    {{ people[1].name }} / {{ people[1].age }}
   </div>
   <div>
-    {{ people[2].name }} / {{people[2].age}}
+    {{ people[2].name }} / {{ people[2].age }}
   </div>
   <div>
-    {{ people[3].name }} / {{people[3].age}}
+    {{ people[3].name }} / {{ people[3].age }}
   </div>
 
   <hr>
 
   <!-- v-for 이용 -->
   <div v-for="(person, index) in people" :key="person.id">
-    {{person.name}} / {{person.age}} / {{index}}
+    {{ person.name }} / {{ person.age }} / {{ index }}
   </div>
 </div>
 
@@ -409,3 +409,55 @@ __Ex.__
 
  v-for를 사용하면 객체의 속성도 반복할 수 있다고 한다.
  __https://kr.vuejs.org/v2/guide/list.html#v-for%EC%99%80-%EA%B0%9D%EC%B2%B4__
+
+ ---
+
+ ### #11 여러개의 Vue 인스턴스 사용하기
+ __Ex.__
+```
+<div id="app">
+  {{ name }}
+  <button @click="changeText">Click</button>
+</div>
+<div id="app-1">
+  {{ name }}
+  <button @click="changeText">Click</button>
+</div>
+
+
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      name: "kenta"
+    },
+    methods: {
+      changeText() {
+        app01.name = "update kenta";
+      }
+    }
+  });
+
+  const app01 = new Vue({
+    el: '#app-1',
+    data: {
+      name: "kenta01"
+    },
+    methods: {
+      changeText() {
+        app.name = "update kenta01";
+      }
+    }
+  });
+</script>
+```
+
+여러 개의 Vue 인스턴스를 사용하는 방법은 새로운 Vue 인스턴스를 생성하고 el 값 안에 새로 사용할 아이디(클래스) 이름을 넣으면 된다.   
+
+또, 새로 만든 Vue인스턴스에서 다른 인스턴스의 데이터에 접근하고 싶을 때에는 Vue 인스턴스를 __변수 안에 담으면 된다.__   
+
+위의 예제에서 app과 app01 이라는 변수에 각각의 Vue 인스턴스를 담았고, changeText()라는 메소드가 있을 것이다. 이 메소드는 실행하면 서로의 name을 바꾸는 기능을 가지고 있다.   
+
+각 메소드는 Vue 인스턴스가 담긴 변수를 활용하여 서로의 값을 바꿀 수 있는 것이다.
+
+· this는 new Vue를 가르키는데, new Vue를 const 변수에 담음으로써 this 대신에 변수명을 사용할 수 있다.
