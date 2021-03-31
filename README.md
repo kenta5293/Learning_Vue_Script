@@ -355,3 +355,57 @@ __Ex.__
 ```
 
 위의 예제를 보면 알 수 있듯이, v-show는 v-if에 비해 매우 간단하다. 공식문서에서는 v-show는 자주 토글해야할 때 즉 없어지거나 렌더링되어야 할 때 사용하고 그 외에는 v-if를 사용하는 것을 권장한다.
+
+---
+
+### #10 v-for & 리스트 렌더링
+v-for는 배열을 기반으로 리스트를 렌더링 할 수 있다. v-for는 "item in items" 라는 특별한 문법으로 작성되며, 여기서 items는 원본 배열의 이름이며, item은 별칭이다. 밑의 예제를 확인해보자.
+
+__Ex.__
+```
+<div id="app">
+  <div>
+    {{ people[0].name }} / {{people[0].age}}
+  </div>
+  <div>
+    {{ people[1].name }} / {{people[1].age}}
+  </div>
+  <div>
+    {{ people[2].name }} / {{people[2].age}}
+  </div>
+  <div>
+    {{ people[3].name }} / {{people[3].age}}
+  </div>
+
+  <hr>
+
+  <!-- v-for 이용 -->
+  <div v-for="(person, index) in people" :key="person.id">
+    {{person.name}} / {{person.age}} / {{index}}
+  </div>
+</div>
+
+
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      people: [
+        { id: 1, name: "a", age: 20 },
+        { id: 2, name: "b", age: 21 },
+        { id: 3, name: "c", age: 22 },
+        { id: 4, name: "d", age: 23 },
+        { id: 5, name: "e", age: 24 },
+        { id: 6, name: "e", age: 25 },
+      ]
+    }
+  });
+</script>
+```
+
+예제에서 확인 할 수 있듯이, people이라는 기존의 배열명과 person이라는 별칭이 사용되었다. 또, index는 v-for에서 제공하는 두번째 인자로 배열의 index값(번지값)을 제공해준다.   
+그리고 __item in items__ 에서 __in__ 대신 __of__ 를 구분자로 사용할 수 있다. __( item of items )__    
+ v-for를 작성할 때의 이점으로는 배열이 추가될 때마다 일일히 div 태그를 추가해주지 않아도 되어 유지보수에도 도움이 된다.
+
+ v-for를 사용하면 객체의 속성도 반복할 수 있다고 한다.
+ __https://kr.vuejs.org/v2/guide/list.html#v-for%EC%99%80-%EA%B0%9D%EC%B2%B4__
