@@ -452,7 +452,7 @@ __Ex.__
 </script>
 ```
 
-여러 개의 Vue 인스턴스를 사용하는 방법은 새로운 Vue 인스턴스를 생성하고 el 값 안에 새로 사용할 아이디(클래스) 이름을 넣으면 된다.   
+여러개의 Vue 인스턴스를 사용하는 방법은 새로운 Vue 인스턴스를 생성하고 el 값 안에 새로 사용할 아이디(클래스) 이름을 넣으면 된다.   
 
 또, 새로 만든 Vue인스턴스에서 다른 인스턴스의 데이터에 접근하고 싶을 때에는 Vue 인스턴스를 __변수 안에 담으면 된다.__   
 
@@ -461,3 +461,118 @@ __Ex.__
 각 메소드는 Vue 인스턴스가 담긴 변수를 활용하여 서로의 값을 바꿀 수 있는 것이다.
 
 · this는 new Vue를 가르키는데, new Vue를 const 변수에 담음으로써 this 대신에 변수명을 사용할 수 있다.
+
+---
+
+### #12 Vue 컴포넌트
+Vue.js 에서는 Component를 두 가지 방법으로 생성할 수 있다.
+
+1 ) Component 전역등록   
+__Ex.__ template
+```
+<div id="app">
+  <!-- 기존 템플릿 -->
+  {{ name }}
+  <button @click="changeText">Click</button>
+  
+  <hr>
+
+  <!-- Component -->
+  <kenta-button></kenta-button>
+</div>
+```
+
+__Ex.__ Vue.js
+```
+// 전역으로 Component 생성
+Vue.component('hello-world', {
+  template: `
+    <div>
+      Hello World
+    </div>
+  `
+})
+
+Vue.component('kenta-button', {
+  template: `
+  <div>
+    {{ name }}
+    <hello-world></hello-world>
+    <button @click="changeText">Click</button>
+  </div>
+  `,
+  data() {
+    return {
+      name: "kenta"
+    }
+  },
+  methods: {
+    changeText() {
+      this.name = "update kenta";
+    }
+  }
+})
+```
+전역 컴포넌트는 __"Vue.component(tagName, options)"__ 과 같은 형태로 작성한다.   
+컴포넌트 생성할 때에는 __template__ 이라는 옵션을 반드시 추가해야한다.   
+여기에는 반복하여 들어갈 HTML 코드가 들어가게 된다.   
+또, data 옵션을 사용할 때에는 반드시 함수의 형태로 작성해야한다.   
+이는, 같은 컴포넌트에서 data 객체를 공유하기 때문에 만약, 첫번째 컴포넌트에서 값을 변경한다면, 다른 컴포넌트에서도 값이 변경되기 때문이다.   
+위의 코드를 보면, kenta-button 컴포넌트 안에 "hello-world"라는 컴포넌트가 있는 것을 확인할 수 있다.   
+즉, 컴포넌트 안에 컴포넌트를 작성할 수 있다는 것이다.   
+
+전역으로 생성할 경우 아무 Vue 인스턴스에서 사용가능하다. 허나, 굳이 모든 컴포넌트를 전역으로 등록할 필요가 없을 뿐더러 오히려 느리게 만들 수도 있다. 그렇기에 지역적으로 등록하는 방법이 있다.
+
+
+2 ) Component 지역등록   
+__Ex.__ template
+```
+<div id="app">
+  <!-- Component -->
+  <kenta-button></kenta-button>
+</d
+```
+
+__Ex.__ Vue.js
+```
+const HelloWorld = {
+  template: `
+        <div>
+          Hello World
+        </div>
+      `
+}
+
+const KentaButton = {
+  components: {
+    'hello-world': HelloWorld
+  },
+  template: `
+  <div>
+    {{ name }}
+    <hello-world></hello-world>
+    <button @click="changeText">Click<button>
+  </div>
+  `,
+  data() {
+    return {
+      name: "kenta"
+    }
+  },
+  methods: {
+    changeText() {
+      this.name = "update kenta";
+    }
+  }
+};
+
+const app = new Vue({
+      el: '#app',
+      components: {
+        'kenta-button': KentaButton
+      }
+})
+```
+
+위에서 작성한 코드가 컴포넌트를 지역으로 등록하는 방법이다.   
+KentaButton 이라는 객체를 생성하고, app이라는 Vue 인스턴스 안에 components라는 옵션으로 등록하여 사용할 수 있다.   
